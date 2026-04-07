@@ -49,45 +49,45 @@ start:
     call draw_rectangle
 
     ; Fill LEFT rectangle (leftmost) with alternating green and red blocks
-    mov cx, 10       ; bottom-left x
-    mov dx, 50       ; bottom-left y
+    mov cx, 10       ; x position
+    mov dx, 50       ; y = 50 (bottom block)
     mov bl, 2        ; green color
     call fill_quarter_rectangle
     
-    mov cx, 10       ; bottom-left x
-    mov dx, 110      ; move up to next block
+    mov cx, 10       ; x position
+    mov dx, 80       ; y = 80
     mov bl, 4        ; red color
     call fill_quarter_rectangle
     
-    mov cx, 30       ; move right to next block
-    mov dx, 50       ; bottom-left y
-    mov bl, 4        ; red color
-    call fill_quarter_rectangle
-    
-    mov cx, 30       ; move right
-    mov dx, 110      ; move up to next block
+    mov cx, 10       ; x position
+    mov dx, 110      ; y = 110
     mov bl, 2        ; green color
+    call fill_quarter_rectangle
+    
+    mov cx, 10       ; x position
+    mov dx, 140      ; y = 140 (top block)
+    mov bl, 4        ; red color
     call fill_quarter_rectangle
 
     ; Fill MIDDLE rectangle with alternating green and red blocks
-    mov cx, 70       ; bottom-left x
-    mov dx, 50       ; bottom-left y
+    mov cx, 70       ; x position
+    mov dx, 50       ; y = 50 (bottom block)
     mov bl, 2        ; green color
     call fill_quarter_rectangle
     
-    mov cx, 70       ; bottom-left x
-    mov dx, 110      ; move up to next block
+    mov cx, 70       ; x position
+    mov dx, 80       ; y = 80
     mov bl, 4        ; red color
     call fill_quarter_rectangle
     
-    mov cx, 90       ; move right to next block
-    mov dx, 50       ; bottom-left y
-    mov bl, 4        ; red color
-    call fill_quarter_rectangle
-    
-    mov cx, 90       ; move right
-    mov dx, 110      ; move up to next block
+    mov cx, 70       ; x position
+    mov dx, 110      ; y = 110
     mov bl, 2        ; green color
+    call fill_quarter_rectangle
+    
+    mov cx, 70       ; x position
+    mov dx, 140      ; y = 140 (top block)
+    mov bl, 4        ; red color
     call fill_quarter_rectangle
 
     ; Draw green square at bottom of RIGHTMOST rectangle
@@ -173,7 +173,7 @@ draw_rectangle endp
 
 ; -------- FILL QUARTER RECTANGLE --------
 ; Input: cx = bottom-left x, dx = bottom-left y, bl = color
-; Fills a quarter rectangle (20x60 pixels)
+; Fills a quarter rectangle (41x30 pixels - full width, quarter height)
 PUBLIC fill_quarter_rectangle
 fill_quarter_rectangle proc near
     push ax
@@ -196,7 +196,7 @@ fill_quarter_rows:
     add dx, bp       ; add row offset
 
     mov cx, di       ; cx = x coordinate
-    mov bx, 20       ; 20 pixels wide (quarter of 41)
+    mov bx, 41       ; 41 pixels wide (full width)
     mov bh, 0
 
 fill_quarter_cols:
@@ -206,7 +206,7 @@ fill_quarter_cols:
     jnz fill_quarter_cols
 
     inc bp           ; next row
-    cmp bp, 60       ; 60 pixels tall (quarter of 120)
+    cmp bp, 30       ; 30 pixels tall (quarter of 120)
     jl fill_quarter_rows
 
     pop bp
